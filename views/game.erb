@@ -1,0 +1,30 @@
+<h1>Blackjack</h1>
+
+<p>Hello, <%= session[:new_player] %></p>
+
+<h6>Dealer's Cards:</h6>
+<ul>
+  <% session[:dealer_cards].each do |card| %>
+    <li><%= card.to_s %></li>
+  <%end%>
+</ul>
+
+
+
+<br>
+
+<h6> <%=session[:new_player]%>'s Cards:</h6>
+<ul>
+  <% session[:player_cards].each do |card| %>
+    <li><%= card.to_s %></li>
+  <%end%>
+</ul>
+
+<p>
+  <%= session[:new_player]%>'s card total is <b><%= calculate(session[:player_cards])%></b>
+</p>
+
+
+
+
+
