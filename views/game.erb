@@ -22,6 +22,14 @@
 
 <p>
   <%= session[:new_player]%>'s card total is <b><%= calculate(session[:player_cards])%></b>
+
+<form action="game/player/hit" method='post'>
+  <input type="submit" class="btn btn-primary" value="Hit"/>
+</form>
+
+<form action="game/player/stay" method='post'>
+  <input type="submit" class="btn btn-primary" value="Stay"/>
+</form>
 </p>
 
 

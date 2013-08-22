@@ -71,3 +71,14 @@ session[:dealer_cards] << session[:deck].pop
 
   erb :game
 end
+
+
+post '/game/player/hit' do
+  session[:player_cards] << session[:deck].pop
+
+  erb :game
+end
+
+post '/game/player/stay' do
+
+end
