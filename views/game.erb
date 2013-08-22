@@ -2,7 +2,7 @@
 
 <p>Hello, <%= session[:new_player] %></p>
 
-<h6>Dealer's Cards:</h6>
+<h6><span class="label label-inverse">Dealer's Cards</span></h6>
 <ul>
   <% session[:dealer_cards].each do |card| %>
     <li><%= card.to_s %></li>
@@ -13,7 +13,7 @@
 
 <br>
 
-<h6> <%=session[:new_player]%>'s Cards:</h6>
+<h6><span class="label label-inverse"><%=session[:new_player]%>'s Cards:</span> </h6>
 <ul>
   <% session[:player_cards].each do |card| %>
     <li><%= card.to_s %></li>
