@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'pry'
 
 set :sessions, true
 
@@ -75,10 +76,18 @@ end
 
 post '/game/player/hit' do
   session[:player_cards] << session[:deck].pop
+  
+
+  if calculate(session[:player_cards]) > 21
+    @error = "You lose. This hand is busted."
+  end
 
   erb :game
 end
 
 post '/game/player/stay' do
+  @success = "Oh, Shit!"
 
+  
+  erb :game
 end
