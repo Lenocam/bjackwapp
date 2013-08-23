@@ -24,6 +24,9 @@
     <%if @success %>
       <div class="alert alert-success"><%=@success%></div>
     <% end %>
+    <%if @tied %>
+      <div class="alert alert-info"><%=@tied%></div>
+    <% end %>
       <%= yield %>
   </div>
   </body>

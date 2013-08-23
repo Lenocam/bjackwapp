@@ -31,6 +31,9 @@ def calculate(cards)
   end  
 end
 
+before do
+  @show_buttons = true
+end
 
 get '/' do
   if session[:new_player]
@@ -77,9 +80,13 @@ end
 post '/game/player/hit' do
   session[:player_cards] << session[:deck].pop
   
-
   if calculate(session[:player_cards]) > 21
     @error = "You lose. This hand is busted."
+    @show_buttons = false
+
+  elsif calculate(session[:player_cards]) == calculate(session[:dealer_cards])
+    @tied = "A Draw has occured. No money exchanges hands."
+    @show_buttons = false
   end
 
   erb :game
@@ -87,7 +94,8 @@ end
 
 post '/game/player/stay' do
   @success = "Oh, Shit!"
+  @show_buttons = false
 
-  
+
   erb :game
 end

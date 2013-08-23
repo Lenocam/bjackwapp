@@ -2,26 +2,30 @@
 
 <p>Hello, <%= session[:new_player] %></p>
 
-<h6><span class="label label-inverse">Dealer's Cards</span></h6>
+
+
+
+<div class="well"><h6><span class="label label-inverse">Dealer's Cards</span></h6>
 <ul>
   <% session[:dealer_cards].each do |card| %>
     <li><%= card.to_s %></li>
   <%end%>
-</ul>
-
-
+</ul></div>
 
 <br>
 
-<h6><span class="label label-inverse"><%=session[:new_player]%>'s Cards:</span> </h6>
+<div class="well"><h6><span class="label label-inverse"><%=session[:new_player]%>'s Cards:</span> </h6>
 <ul>
   <% session[:player_cards].each do |card| %>
     <li><%= card.to_s %></li>
   <%end%>
-</ul>
+</ul></div>
+
 
 <p>
   <%= session[:new_player]%>'s card total is <b><%= calculate(session[:player_cards])%></b>
+
+<%if @show_buttons%>
 
 <form action="/game/player/hit" method='post'>
   <input type="submit" class="btn btn-primary" value="Hit"/>
@@ -30,6 +34,7 @@
 <form action="/game/player/stay" method='post'>
   <input type="submit" class="btn btn-primary" value="Stay"/>
 </form>
+<%end%>
 </p>
 
 
