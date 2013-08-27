@@ -2,36 +2,58 @@
 
 <p>Hello, <%= session[:new_player] %></p>
 
+<%if @play_again%>
+<p>
+  <strong>Play Again?</strong>
+  <a href="/bet" class="btn btn-primary">Yes!</a>
+  <a href="/game_over" class="btn btn-info">No Thanks!</a>
+</p>
+<%end%>
 
+<div class="well"><h6><span class="label label-info">Dealer's Cards</span></h6>
 
-
-<div class="well"><h6><span class="label label-inverse">Dealer's Cards</span></h6>
-<ul>
-  <% session[:dealer_cards].each do |card| %>
-    <li><%= card.to_s %></li>
+  <% session[:dealer_cards].each_with_index do |card, i| %>
+    <% if session[:turn] != "dealer" && i == 0 %>
+      <img src="/images/cards/cover.jpg">
+    <%else%>
+      <%=card_image(card)%>
+    <%end%>
   <%end%>
-</ul></div>
 
-<br>
 
-<div class="well"><h6><span class="label label-inverse"><%=session[:new_player]%>'s Cards:</span> </h6>
-<ul>
+  <% if @dealer_hit %>
+    <p>
+      <h5>Dealer has <%= calculate(session[:dealer_cards])%> and will hit.</h5>
+      <form action='/game/dealer/hit' method='post'>
+        <input type='submit' class='btn btn-primary' value="See the Dealer's next card &rarr;">
+      </form>
+    </p>
+  <%end%>
+</div>
+
+<br/>
+<div class="well"><h6><span class="label label-primary"><%=session[:new_player]%>'s Cards:</span> </h6>
+
   <% session[:player_cards].each do |card| %>
-    <li><%= card.to_s %></li>
+    <%=card_image(card)%>
   <%end%>
-</ul></div>
+
+  <h5>
+    <%= session[:new_player] %> has $<%= session[:player_pot] %> and bet $<%= session[:player_bet]%> this round.
+  </h5>
+</div>
 
 
 <p>
-  <%= session[:new_player]%>'s card total is <b><%= calculate(session[:player_cards])%></b>
+  <%= session[:new_player]%>'s cards total is <b><%= calculate(session[:player_cards])%></b>
 
 <%if @show_buttons%>
 
-<form action="/game/player/hit" method='post'>
+<form id="hit_button"action="/game/player/hit" method='post'>
   <input type="submit" class="btn btn-primary" value="Hit"/>
 </form>
 
-<form action="/game/player/stay" method='post'>
+<form id ="stay_button" action="/game/player/stay" method='post'>
   <input type="submit" class="btn btn-primary" value="Stay"/>
 </form>
 <%end%>
