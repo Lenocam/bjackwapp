@@ -7,7 +7,7 @@ set :sessions, true
 
 BLACKJACK_AMOUNT = 21
 DEALER_MIN_HIT = 17
-INITIAL_POT_AMOUNT = 500
+INITIAL_POT_AMOUNT = 1000
 
 helpers do
   def calculate(cards)
@@ -59,14 +59,14 @@ helpers do
     @play_again = true
     @show_buttons = false
     session[:player_pot] = session[:player_pot] + session[:player_bet]
-    @success = "<strong>#{session[:new_player]} wins!</strong> #{msg}"
+    @winner = "<strong>#{session[:new_player]} wins!</strong> #{msg}"
   end
 
   def loser!(msg)
     @play_again = true
     @show_buttons = false
     session[:player_pot] = session[:player_pot] - session[:player_bet]
-    @error = "<strong>#{session[:new_player]} loses!</strong> #{msg}"
+    @loser = "<strong>#{session[:new_player]} loses!</strong> #{msg}"
   end
 
   def tie!(msg)
@@ -94,6 +94,7 @@ get '/new_player' do
 end
 
 post '/new_player' do
+  
   if params[:new_player].empty?
     @error = "Please enter a name to play the game."
     halt erb(:new_player)
@@ -158,7 +159,7 @@ post '/game/player/hit' do
     loser!("Busted!!! #{session[:new_player]} has busted with #{player_total}.")
   end
 
-  erb :game
+  erb :game, layout: false 
 end
 
 post '/game/player/stay' do
