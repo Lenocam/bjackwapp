@@ -56,24 +56,23 @@ helpers do
   end
 
   def winner!(msg)
-    @success = "<strong>#{session[:new_player]} wins! </strong> #{msg}"
+    @play_again = true
     @show_buttons = false
     session[:player_pot] = session[:player_pot] + session[:player_bet]
-    @play_again = true
+    @success = "<strong>#{session[:new_player]} wins!</strong> #{msg}"
   end
 
   def loser!(msg)
     @play_again = true
-    @error = "<strong>#{session[:new_player]} loses! </strong> #{msg}"
     @show_buttons = false
     session[:player_pot] = session[:player_pot] - session[:player_bet]
-    
+    @error = "<strong>#{session[:new_player]} loses!</strong> #{msg}"
   end
 
   def tie!(msg)
     @play_again = true
-    @tied = "<strong>#{session[:new_player]} and the dealer have tied! </strong> #{msg}"
     @show_buttons = false
+    @tied = "<strong>#{session[:new_player]} and the dealer have tied!</strong> #{msg}"
   end
 end
 
@@ -156,7 +155,7 @@ post '/game/player/hit' do
   if player_total == BLACKJACK_AMOUNT
     winner!("Blackjack #{session[:new_player]} hit blackjack.")
   elsif calculate(session[:player_cards]) > BLACKJACK_AMOUNT
-    loser!("Busted!!! #{session[:new_player]} has busted at #{player_total}")
+    loser!("Busted!!! #{session[:new_player]} has busted with #{player_total}.")
   end
 
   erb :game
@@ -199,7 +198,7 @@ get '/game/compare' do
   dealer_total = calculate(session[:dealer_cards])
 
   if player_total < dealer_total
-    loser!("#{session[:new_player]}'s hand are lower than the dealer's hand.")
+    loser!("#{session[:new_player]}'s hand is lower than the dealer's hand.")
   elsif player_total > dealer_total
     winner!("#{session[:new_player]}'s hand is better than the dealer's hand.")
   else

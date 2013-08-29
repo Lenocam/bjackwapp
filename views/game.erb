@@ -1,3 +1,6 @@
+
+
+
 <h1>Blackjack</h1>
 
 <p>Hello, <%= session[:new_player] %></p>
@@ -8,7 +11,36 @@
   <a href="/bet" class="btn btn-primary">Yes!</a>
   <a href="/game_over" class="btn btn-info">No Thanks!</a>
 </p>
+<% end %>
+
+<div class="well" id="player_cards"><h6><span class="label label-primary"><%=session[:new_player]%>'s Cards:</span> </h6>
+
+  <% session[:player_cards].each do |card| %>
+    <%=card_image(card)%>
+  <%end%>
+
+  <h5>
+    <%= session[:new_player] %> has $<%= session[:player_pot] %> and bet $<%= session[:player_bet]%> this round.
+  </h5>
+  <p>
+  <%= session[:new_player]%>'s cards total is <%= calculate(session[:player_cards])%>
+</b>
+
+<%if @show_buttons%>
+
+<form id="hit_button" action="/game/player/hit" method='post'>
+  <input type="submit" class="btn btn-primary" value="Hit"/>
+</form>
+
+<form id ="stay_button" action="/game/player/stay" method='post'>
+  <input type="submit" class="btn btn-primary" value="Stay"/>
+</form>
 <%end%>
+</p>
+
+</div>
+<br/>
+
 
 <div class="well"><h6><span class="label label-info">Dealer's Cards</span></h6>
 
@@ -31,33 +63,10 @@
   <%end%>
 </div>
 
-<br/>
-<div class="well"><h6><span class="label label-primary"><%=session[:new_player]%>'s Cards:</span> </h6>
-
-  <% session[:player_cards].each do |card| %>
-    <%=card_image(card)%>
-  <%end%>
-
-  <h5>
-    <%= session[:new_player] %> has $<%= session[:player_pot] %> and bet $<%= session[:player_bet]%> this round.
-  </h5>
-</div>
 
 
-<p>
-  <%= session[:new_player]%>'s cards total is <b><%= calculate(session[:player_cards])%></b>
 
-<%if @show_buttons%>
 
-<form id="hit_button"action="/game/player/hit" method='post'>
-  <input type="submit" class="btn btn-primary" value="Hit"/>
-</form>
-
-<form id ="stay_button" action="/game/player/stay" method='post'>
-  <input type="submit" class="btn btn-primary" value="Stay"/>
-</form>
-<%end%>
-</p>
 
 
 
