@@ -39,3 +39,4 @@ function dealer_hit() {
     return false;
   });
 }
+
