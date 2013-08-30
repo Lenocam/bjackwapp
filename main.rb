@@ -59,22 +59,27 @@ helpers do
     @play_again = true
     @show_buttons = false
     session[:player_pot] = session[:player_pot] + session[:player_bet]
-    @winner = "<strong>#{session[:new_player]} wins!</strong> #{msg}"
+    @winner = "<strong>#{session[:new_player]} wins!</strong> #{msg}.\n
+    <strong>After that hand, #{session[:new_player]}'s pot conatains $#{session[:player_pot]}</strong>"
   end
 
   def loser!(msg)
     @play_again = true
     @show_buttons = false
     session[:player_pot] = session[:player_pot] - session[:player_bet]
-    @loser = "<strong>#{session[:new_player]} loses!</strong> #{msg}"
+    @loser = "<strong>#{session[:new_player]} loses!</strong> #{msg}\n
+    <strong>After that hand, #{session[:new_player]}'s pot conatains $#{session[:player_pot]}</strong>"
+             
   end
 
   def tie!(msg)
     @play_again = true
     @show_buttons = false
-    @tied = "<strong>#{session[:new_player]} and the dealer have tied!</strong> #{msg}"
+    @tied = "<strong>#{session[:new_player]} and the dealer have tied!</strong> #{msg}\n
+    <strong>After that hand, #{session[:new_player]}'s pot conatains $#{session[:player_pot]}</strong>"   
   end
 end
+  
 
 before do
   @show_buttons = true
